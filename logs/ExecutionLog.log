@@ -1,0 +1,31 @@
+[2018-05-10T15:56:39.725] [TRACE] default - Entering cheese testing
+[2018-05-10T15:56:39.730] [DEBUG] default - Got Cheese.
+[2018-05-10T15:56:39.730] [INFO] default - cheese is gouda.
+[2018-05-10T15:56:39.730] [WARN] default - Cheese is quite smelly.
+[2018-05-10T15:56:39.731] [ERROR] default - Cheese is too ripe!
+[2018-05-10T15:56:39.732] [FATAL] default - Cheese was breeding ground for listeria.
+[2018-05-10T15:58:51.556] [INFO] default - Mongo connection successed
+[2018-05-10T16:04:44.439] [INFO] default - app listening at http://localhost:3000
+[2018-05-10T16:04:45.454] [INFO] default - Mongo connection successed
+[2018-05-10T16:04:58.713] [INFO] default - show article: 5af1487e6cbc0d1020b32b27
+[2018-05-10T16:05:50.536] [INFO] default - show article: 5af1487e6cbc0d1020b32b27
+[2018-05-14T10:02:30.689] [INFO] default - app listening at http://localhost:3000
+[2018-05-14T10:02:34.065] [INFO] default - Mongo connection successed
+[2018-05-14T10:03:18.715] [INFO] default - show article: 5af1487e6cbc0d1020b32b27
+[2018-05-15T14:18:36.584] [INFO] default - show article: 5af1487e6cbc0d1020b32b27
+[2018-05-15T14:24:09.748] [INFO] default - show article: 5af1487e6cbc0d1020b32b27
+[2018-05-15T14:41:54.449] [INFO] default - app listening at http://localhost:3000
+[2018-05-15T14:41:55.628] [INFO] default - Mongo connection successed
+[2018-05-15T14:44:58.587] [INFO] default - app listening at http://localhost:3000
+[2018-05-15T14:44:59.629] [INFO] default - Mongo connection successed
+[2018-05-15T14:45:31.444] [INFO] default - login msg: htt-12345
+[2018-05-16T17:29:52.689] [INFO] default - app listening at http://localhost:3000
+[2018-05-16T17:29:53.758] [INFO] default - Mongo connection successed
+[2018-05-17T13:50:26.706] [INFO] default - app listening at http://localhost:3000
+[2018-05-17T13:50:27.741] [INFO] default - Mongo connection successed
+[2018-05-18T13:34:28.681] [INFO] default - app listening at http://localhost:3000
+[2018-05-18T13:34:29.935] [INFO] default - Mongo connection successed
+[2018-05-18T15:00:30.299] [INFO] default - app listening at http://localhost:3000
+[2018-05-18T15:00:31.401] [INFO] default - Mongo connection successed
+[2018-05-18T15:02:32.842] [INFO] default - app listening at http://localhost:3000
+[2018-05-18T15:02:33.894] [INFO] default - Mongo connection successed
