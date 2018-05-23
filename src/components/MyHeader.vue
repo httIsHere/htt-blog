@@ -5,7 +5,7 @@
   		<nav role="navigation" class="header-nav">
   			<a class="header-navItem" :class="{'is-active': currentModule===0}" href="/">首页</a>
   			<a class="header-navItem" :class="{'is-active': currentModule===1}" href="/#/questions">专题</a>
-  			<a class="header-navItem" :class="{'is-active': currentModule===2}" href="/">发现</a>
+  			<a class="header-navItem" :class="{'is-active': currentModule===2}" href="/#/interesting">发现</a>
   		</nav>
   		<div class="SearchBar" role="search">
   			<div class="SearchBar-toolWrapper">

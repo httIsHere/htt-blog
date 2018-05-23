@@ -162,5 +162,9 @@ export default {
       }
       return res.data
     })
+  },
+  //标签选择页返回写文章页
+  setCateToWrite: ({commit}, cateToW) => {
+    commit('SET_CATETOWRITE', cateToW)
   }
 }

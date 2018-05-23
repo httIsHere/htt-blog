@@ -208,8 +208,10 @@ export default {
     };
   },
   created: function() {
+		let loading = this.$loading("加载中")
     this.$store.dispatch("getRecentArticles").then(res => {
-      this.articles = this.$store.getters.articles;
+			this.articles = this.$store.getters.articles;
+			loading.close();  
     });
     this.$store.dispatch("getCategories").then(res => {
       this.categories = this.$store.getters.categories;

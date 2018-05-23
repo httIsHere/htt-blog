@@ -15,6 +15,7 @@
 				<div>
 					<a href="javaxcript:;" title="插入图片" @click="toggleUpload">图片</a>
 					<span @click="toggleShow">{{showText}}</span>
+					<router-link to="/cateChoose">标签</router-link>
 				</div>
 			</div>
 			<hr />
@@ -31,7 +32,7 @@
 <script>
 import MyHeader from "../components/MyHeader";
 import UploadImg from "../components/UploadImg";
-
+import bus from '../lib/event';
 export default {
   name: "write",
   data() {
@@ -40,8 +41,19 @@ export default {
       content: "",
       markedShow: false,
       showText: "预览",
-      upBtn: false
+      upBtn: false,
+      category: null
     };
+  },
+  mounted: function (s) {
+    this.category = this.$route.params.id;
+    bus.$on('cateToWrite', data => {
+      if(data){
+        this.$toast({
+          message: `选择标签：${data.name}`
+        });
+      }      
+    })
   },
   computed: {
     compiledMarkdown: function() {
@@ -71,15 +83,19 @@ export default {
         title: this.title,
         content: this.content,
         time: new Date().getTime(),
-        category: this.$store.getters.currentCate._id
+        category: this.category || this.$store.getters.currentCate._id
       };
       this.$store.dispatch("addNote", _newNote).then(res => {
         if (res.msg == "success") {
           this.title = "";
           this.content = "";
-          alert("发布成功");
+          this.$toast({
+            message: '发布成功'
+          });
         } else {
-          alert("发布失败");
+          this.$toast({
+            message: '发布失败'
+          });
         }
       });
     },

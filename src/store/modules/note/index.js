@@ -9,6 +9,7 @@ const state = {
   currentArticle: null,
   isLoading: false,
   isToasting: false,
+  cateToWrite: false,
   toast: {
     info: '',
     btnNum: 1,
@@ -31,7 +32,8 @@ const getters = {
     return state.articles.length
   },
   replyStr: state => state.replyStr,
-  toast: state => state.toast
+  toast: state => state.toast,
+  cateToWrite: state => state.cateToWrite
 }
 const mutations = {
   LOADING_TOGGLE: (state, isLoading) => {
@@ -73,6 +75,9 @@ const mutations = {
   },
   SET_CURRENTARTICLE: (state, article) => {
     state.currentArticle = article
+  },
+  SET_CATETOWRITE: (state, cateToW) => {
+    state.cateToWrite = cateToW
   }
 }
 

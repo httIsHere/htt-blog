@@ -11,6 +11,7 @@ import Draft from '@//views/Draft'
 import Email from '@//views/Email'
 import Questions from '@/views/Questions'
 import Chat from '@/views/Chat'
+import CateChoose from '@/views/CateChoose'
 // 控制台页面
 
 Vue.use(Router)
@@ -35,7 +36,7 @@ export default new Router({
       component: Login
     },
     {
-      path: '/write',
+      path: '/write/:id?',
       name: 'Write',
       component: Write
     },
@@ -63,6 +64,11 @@ export default new Router({
       path: '/imChat',
       name: 'Chat',
       component: Chat
+    },
+    {
+      path: '/cateChoose',
+      name: 'CateChoose',
+      component: CateChoose
     }
   ]
 })
