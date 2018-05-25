@@ -2,7 +2,7 @@
 const db = require('./db')
 const express = require('express')
 const router = express.Router()
-const fn = () => { }
+const fn = () => {}
 const logger = require('./log')
 
 // 获得用户ip
@@ -22,14 +22,24 @@ router.post('/server/login', (req, res) => {
   const username = req.body.username
   const password = req.body.password
   logger.info('login msg: ' + username + '-' + password)
-  db.User.findOne({ 'username': username, 'pwd': password }).then(data => {
+  db.User.findOne({
+    'username': username,
+    'pwd': password
+  }).then(data => {
     if (data) {
       req.session.sign = true
       req.session.username = username
       req.session.isAdmin = data.isAdmin
-      res.send(JSON.stringify({ msg: 'success', code: '200', user: data }))
+      res.send(JSON.stringify({
+        msg: 'success',
+        code: '200',
+        user: data
+      }))
     } else {
-      res.send(JSON.stringify({ msg: 'error', code: '500' }))
+      res.send(JSON.stringify({
+        msg: 'error',
+        code: '500'
+      }))
     }
   })
 })
@@ -41,16 +51,26 @@ router.post('/server/addUser', (req, res) => {
     db.User.findByIdAndUpdate(_id, newUser, fn)
   } else {
     new db.User(newUser).save().then(() => {
-      res.send(JSON.stringify({ msg: 'success', code: '200' }))
+      res.send(JSON.stringify({
+        msg: 'success',
+        code: '200'
+      }))
     }, () => {
-      res.send(JSON.stringify({ msg: 'error', code: '400' }))
+      res.send(JSON.stringify({
+        msg: 'error',
+        code: '400'
+      }))
     })
   }
 })
 
 // 展示文章数据(最新的5条)
 router.get('/server/getArticles', (req, res) => {
-  db.Article.find({ 'isDelete': false }).limit(5).sort({ _id: -1 }).populate('category').then(data => {
+  db.Article.find({
+    'isDelete': false
+  }).limit(5).sort({
+    _id: -1
+  }).populate('category').then(data => {
     res.send(JSON.stringify(data))
   })
 })
@@ -58,7 +78,29 @@ router.get('/server/getArticles', (req, res) => {
 // 展示文章数据(合集内文章列表)
 router.post('/server/getCateArticles', (req, res) => {
   const _id = req.body.id
-  db.Article.find({ 'isDelete': false, 'category': _id}).limit(5).sort({ _id: -1 }).populate('category').then(data => {
+  db.Article.find({
+    'isDelete': false,
+    'category': _id
+  }).sort({
+    _id: -1
+  }).populate('category').then(data => {
+    res.send(JSON.stringify(data))
+  })
+})
+
+// 展示草稿箱
+router.post('/server/getDraft', (req, res) => {
+  logger.info('show draft')
+  db.Article.find({
+    $or: [{
+      'isDelete': true
+    },
+    {
+      'isPublic': false
+    }]
+  }).sort({
+    _id: -1
+  }).then(data => {
     res.send(JSON.stringify(data))
   })
 })
@@ -85,23 +127,54 @@ router.post('/server/addArticle', (req, res) => {
     db.Article.findByIdAndUpdate(_id, article, fn)
   } else {
     new db.Article(article).save().then(() => {
-      res.end(JSON.stringify({ msg: 'success', code: '200' }))
+      res.end(JSON.stringify({
+        msg: 'success',
+        code: '200'
+      }))
     })
   }
 })
 
-// 删除文章
-router.post('/server/deleteArticle', (req, res) => {
+// 删除/恢复文章
+router.post('/server/opArticle', (req, res) => {
   const _id = req.body.id
-  logger.info('delete article: ' + _id)
-  db.Article.update({ '_id': _id }, { 'isDelete': true }).then(() => {
-    res.send(JSON.stringify({ msg: 'success', code: '200' }))
-  })
+  const _op = req.body.op
+  const _time = new Date().getTime()
+  if (_op === 0 || parseInt(_op) === 0) {
+    logger.info('delete article: ' + _id)
+    db.Article.update({
+      '_id': _id
+    }, {
+      'isDelete': true,
+      'editTime': _time
+    }).then(() => {
+      res.send(JSON.stringify({
+        msg: 'success',
+        code: '200'
+      }))
+    })
+  } else if (_op === 1 || parseInt(_op) === 1) {
+    logger.info('pulish article: ' + _id)
+    db.Article.update({
+      '_id': _id
+    }, {
+      'isDelete': false,
+      'isPublic': true,
+      'editTime': _time
+    }).then(() => {
+      res.send(JSON.stringify({
+        msg: 'success',
+        code: '200'
+      }))
+    })
+  }
 })
 
 // 展示分类标签
 router.get('/server/getCategories', (req, res) => {
-  db.Categories.find().sort({ _id: -1 }).then(resDate => {
+  db.Categories.find().sort({
+    _id: -1
+  }).then(resDate => {
     res.send(JSON.stringify(resDate))
   })
 })
@@ -114,7 +187,10 @@ router.post('/server/addCategory', (req, res) => {
     db.Categories.findByIdAndUpdate(_id, newCate, fn)
   } else {
     new db.Categories(newCate).save().then(() => {
-      res.send(JSON.stringify({ msg: 'success', code: '200' }))
+      res.send(JSON.stringify({
+        msg: 'success',
+        code: '200'
+      }))
     })
   }
 })
@@ -130,11 +206,16 @@ router.post('/server/submitComment', (req, res) => {
   }
   const _id = req.body.article
   newCommet.comment = req.body.content
-  db.Article.findOne({_id: _id}).then(data => {
+  db.Article.findOne({
+    _id: _id
+  }).then(data => {
     data.comments.push(newCommet)
     return data.save()
   }).then(date => {
-    res.send(JSON.stringify({ msg: 'success', code: '200' }))
+    res.send(JSON.stringify({
+      msg: 'success',
+      code: '200'
+    }))
   })
 })
 // 提问
@@ -143,12 +224,17 @@ router.post('/server/subQuestion', (req, res) => {
   newQuestion.from = getIp(req)
   newQuestion.time = new Date().getTime()
   db.Question(newQuestion).save().then(data => {
-    res.send(JSON.stringify({ msg: 'success', code: '200' }))
+    res.send(JSON.stringify({
+      msg: 'success',
+      code: '200'
+    }))
   })
 })
 // 问题展示
 router.get('/server/getQuestions', (req, res) => {
-  db.Question.find().sort({_id: -1}).then(data => {
+  db.Question.find().sort({
+    _id: -1
+  }).then(data => {
     res.send(JSON.stringify(data))
   })
 })
@@ -161,12 +247,18 @@ router.post('/server/subAnswer', (req, res) => {
     isAdmin: req.body.isAdmin
   }
   const _id = req.body.to
-  db.Question.findOne({_id: _id}).then(data => {
+  db.Question.findOne({
+    _id: _id
+  }).then(data => {
     data.reply.push(answer)
     return data.save()
   }).then(data => {
-    res.send(JSON.stringify({ msg: 'success', code: '200' }))
+    res.send(JSON.stringify({
+      msg: 'success',
+      code: '200'
+    }))
   })
 })
 
 module.exports = router
+

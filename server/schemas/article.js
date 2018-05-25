@@ -33,5 +33,10 @@ module.exports = new mongoose.Schema({
     default: false
   },
   link: String,
-  author: String
+  author: String,
+  isPublic: {
+    type: Boolean,
+    default: true
+  },
+  editTime: String
 })
