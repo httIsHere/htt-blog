@@ -3,9 +3,9 @@
   	<div class="header-inner">
   		<a href="/" aria-label="汪世界" class="header-title">汪卷</a>
   		<nav role="navigation" class="header-nav">
-  			<a class="header-navItem" :class="{'is-active': currentModule===0}" href="/">首页</a>
-  			<a class="header-navItem" :class="{'is-active': currentModule===1}" href="/#/questions">专题</a>
-  			<a class="header-navItem" :class="{'is-active': currentModule===2}" href="/#/interesting">发现</a>
+  			<router-link class="header-navItem" :class="{'is-active': currentModule===0}" to="/">首页</router-link>
+  			<router-link class="header-navItem" :class="{'is-active': currentModule===1}" to="/questions">专题</router-link>
+  			<router-link class="header-navItem" :class="{'is-active': currentModule===2}" to="/interesting">发现</router-link>
   		</nav>
   		<div class="SearchBar" role="search">
   			<div class="SearchBar-toolWrapper">

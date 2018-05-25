@@ -3,7 +3,7 @@
     <my-header></my-header>
     <div class="Card DetailMain">
         <div class="DetailMain-title">
-            <h2>{{article.title}}</h2>
+            <h2><span class="Feed-meta-itemBox" v-show="article.islinked">转载</span>{{article.title}}</h2>
         </div>
         <div class="DetailMain-meta">
           <span>作者：{{article.author ? article.author : '汪卷卷'}}</span>
@@ -11,11 +11,12 @@
           <span>字数：{{article.content ? article.content.match(reg).length : 0}}</span>
           <!-- <span class="editBtn" v-if="user.isAdmin">编辑文章</span> -->
         </div>
+        <p class="DetailMain-link" v-if="article.islinked"><span>原文链接：</span><a :href="article.link">{{article.link}}</a></p>
         <div class="DetailMain-content" v-html="article.content"></div>   
         <hr>
         <div class="DetailMain-comments">
-          <textarea rows="5" placeholder="写下你的评论..." v-model="comment.content"></textarea>
-          <a href="javascript:;" class="subComment" @click="subComment">发送</a>
+          <textarea rows="5" placeholder="写下你的评论..." v-model="comment.content" v-if="!article.isDelete&&!article.public"></textarea>
+          <a href="javascript:;" class="subComment" @click="subComment" v-if="!article.isDelete&&!article.public">发送</a>
           <div class="DetailMain-commentsList">
             <h6>{{article.comments.length}}条评论</h6>
             <ul v-if="article.comments.length">
@@ -33,8 +34,9 @@
         </div>     
         <div class="DetailMain-operateBtn">
           <a href="javascript:;" v-if="user.isAdmin">编辑</a>
-          <a href="javascript:;" @click="deleteArticle" v-if="user.isAdmin">删除</a>
-          <a href="javascript:;">分享</a>
+          <a href="javascript:;" @click="deleteArticle" v-if="user.isAdmin&&!article.isDelete">删除</a>
+          <a href="javascript:;" @click="pulishArticle" v-if="user.isAdmin&&article.isDelete">恢复</a>
+          <a href="javascript:;" @click="shareArticle" :data-clipboard-text="shareLink" class="shareArticle">分享</a>
         </div>
     </div>
   </div>
@@ -62,7 +64,8 @@ export default {
       comment: {
         article: null,
         content: ""
-      }
+      },
+      shareLink: ''
     };
   },
   mounted() {
@@ -81,6 +84,7 @@ export default {
           }
         );
       });
+      this.shareLink = window.location.href
   },
   methods: {
     formatUsername(ip) {
@@ -91,7 +95,11 @@ export default {
     },
     deleteArticle() {
       //加一个确认弹框
-      this.$store.dispatch("deleteArticle", this.id).then(res => {
+      const _item = {
+        id: this.id,
+        op: '0'
+      }
+      this.$store.dispatch("opArticle", _item).then(res => {
         if (res.msg === "success") {
           this.$toast({
             message: "删除成功"
@@ -130,6 +138,39 @@ export default {
           }
         });
       }
+    },
+    pulishArticle(){
+      const _item = {
+        id: this.id,
+        op: '1'
+      }
+      this.$store.dispatch("opArticle", _item).then(res => {
+        if (res.msg === "success") {
+          this.$toast({
+            message: "恢复成功"
+          });
+          this.$router.push("/");
+        } else {
+          this.$toast({
+            message: "恢复失败"
+          });
+        }
+      });
+    },
+    shareArticle(){
+      const clipboard = new this.$copy('.shareArticle')
+      clipboard.on('success', e => {
+        this.$toast({
+          message: '本文章链接复制成功'
+        })
+        clipboard.destroy()       
+      })  
+      clipboard.on('error', e => {
+        this.$toast({
+          message: '本浏览器不支持自动复制'
+        })
+        clipboard.destroy()       
+      })
     }
   },
   components: {

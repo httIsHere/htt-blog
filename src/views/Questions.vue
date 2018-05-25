@@ -26,11 +26,11 @@
               <span>{{questions[currentQ].reply.length}}个回答</span>
               <hr>
               <ul class="answersList">
-                  <li class="answerItem" v-for="re in questions[currentQ].reply" :class="{'adminAnswer': re.isAdmin}">
+                  <li class="answerItem" v-for="re in questions[currentQ].reply" :class="{'adminAnswer': re.isAdmin=='1'}">
                       <p v-html="markContent(re.content)"></p>
                       <p class="reply-meta">
-                          <span v-if="!re.isAdmin">{{formatUsername(re.from)}}</span>
-                          <span v-if="re.isAdmin">博主</span>
+                          <span v-if="!re.isAdmin||re.isAdmin=='0'">{{formatUsername(re.from)}}</span>
+                          <span v-if="re.isAdmin=='1'">博主</span>
                           &nbsp;&nbsp;
                           <span>{{formatTime(re.time)}}回答</span>
                       </p>

@@ -143,11 +143,9 @@ export default {
       return res.data
     })
   },
-  deleteArticle: ({commit, state}, _id) => {
-    const reqParams = {
-      id: _id
-    }
-    return axios.post('/server/deleteArticle', qs.stringify(reqParams)).then(res => {
+  opArticle: ({commit, state}, _item) => {
+    const reqParams = _item
+    return axios.post('/server/opArticle', qs.stringify(reqParams)).then(res => {
       commit('SET_CURRENTARTICLE', res.data)
       if (res.data.msg === 'success') {
         doToast(state, commit, {
@@ -163,8 +161,13 @@ export default {
       return res.data
     })
   },
-  //标签选择页返回写文章页
+  // 标签选择页返回写文章页
   setCateToWrite: ({commit}, cateToW) => {
     commit('SET_CATETOWRITE', cateToW)
+  },
+  getDraft: ({commit, state}) => {
+    return axios.post('/server/getDraft').then(res => {
+      return res.data
+    })
   }
 }

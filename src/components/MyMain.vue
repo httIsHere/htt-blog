@@ -10,7 +10,7 @@
 							<a href="/#/questions" class="Topstory-header-navItem" v-show="user.isAdmin">回答</a>
 							<a href="/#/write" class="Topstory-header-navItem" v-show="user.isAdmin">写文章</a>
 						</div>
-						<a href="/#/draft" class="Topstory-header-rightItem" v-show="user.isAdmin">草稿</a>
+						<a href="/#/draft" class="Topstory-header-rightItem" v-show="user.isAdmin">草稿箱</a>
 					</div>
 					<div class="Topstory-main noArticle" v-show="!articles.length">
 						<div>
@@ -28,6 +28,7 @@
 									<div class="Feed-title">
 										<div class="Feed-meta">
 											<span class="Feed-meta-item" v-show="article.category"># {{article.category ? article.category.name: ''}} #</span>
+											<span class="Feed-meta-itemBox" v-show="article.islinked">转载</span>
 										</div>
 									</div>
 									<div class="Content-item Answer-item">
@@ -208,6 +209,8 @@ export default {
     };
   },
   created: function() {
+		if(document.body.clientWidth <= 979 && this.user.isAdmin){
+		}
 		let loading = this.$loading("加载中")
     this.$store.dispatch("getRecentArticles").then(res => {
 			this.articles = this.$store.getters.articles;

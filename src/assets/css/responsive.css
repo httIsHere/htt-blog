@@ -25,11 +25,13 @@
     .header-nav{margin: 0 auto; width: 70%;}
     .header-navItem{padding: 0;}
     .header-userInfo{display: none;}
+    .header-navItem.is-active{color: #2d84cc;}
 
     /* main view */
     .Topstory-slideBar{display: none;}
-    .Topstory-header{width: 2rem; height: 2rem; border-radius: 1rem; padding: 0; text-align: center;line-height: 2rem; justify-content: center;position: fixed;right: -1rem;z-index: 10;}
-    .Topstory-header-navItem+.Topstory-header-navItem{display: none;}
+    .Topstory-header button{width: 2rem; height: 2rem; border-radius: 1rem; padding: 0; text-align: center;line-height: 2rem; justify-content: center;position: fixed;right: -1rem;z-index: 10;background: #FFF;border: 1px solid #f0f0f0;}
+    .Topstory-header-navItem+.Topstory-header-navItem{margin: 0;}
+    .Topstory-header-navItem:nth-child(3){margin-left: .8rem;}
     .Topstory-container{width: 96%;margin: 0 auto;display: block;padding: 0;}
     .Topstory-mainColumn{margin: 0;}
     .Topstory-main{width: 100%;}
@@ -42,10 +44,11 @@
     .DetailMain{width: 96%; padding: .53333rem;}
     .DetailMain-meta{width: 90%;padding: 0;margin: 0 auto; font-size: .55rem;}
     .DetailMain-content{width:90%;padding: 0; margin: .5333rem auto;}
-    .DetailMain-comments textarea{padding: 0; width: 100%;}
+    .DetailMain-comments textarea{padding: .5rem; width: 90%;}
     .DetailMain-comments .subComment{margin: 0;}
     .DetailMain-operateBtn{margin: 0; top: 5rem;right: 0;}
     .DetailMain-commentsList{padding: 0;}
+    .compiledMarkdown img, .DetailMain-content img{max-width: 100%;}
 
     /* write view */
     .write-main .header-inner{display: flex; justify-content: space-between;}
@@ -67,7 +70,15 @@
     /* question view */
     .QuestionView-main, .QuestionView-detail{width: 100%; padding: .5rem;}
     .questionItem-reply{font-size: .45rem;width: 14%;}
-    .questionDetail h6{font-size: .7rem;}
+    .questionDetail h6{font-size: .7rem;width: 95%;margin: 1.5rem auto;}
     .questionDetail .details{width: 90%;margin: 1.2rem auto;}
     #answer{width: 90%;margin: .5rem auto;}
+
+    /* post question */
+    .QuestionAsk-Modal{width: 90%;}
+    .Input-wrapper .DraftEditor-root, .Input-wrapper .Editable-toolbar, .Input-wrapper.Input-wrapper--large{overflow-y: scroll;}
+
+    /* draft */
+    .draftItem{padding: .5rem 1.0rem;}
+    .draftItem-meta{font-size: .45rem;}
 }

@@ -9,6 +9,23 @@
 				</div>
 			</div>
 		</header>
+    <section class="Card isOriginal_box">
+      <span class="radio_box">
+        <input type="radio" name="isOriginal" id="original" value="original" v-model="isLink" checked>
+        <label for="original"></label>
+        <em>原创</em>
+      </span>
+      <span class="radio_box">
+        <input type="radio" name="isOriginal" id="reprint" value="reprint" v-model="isLink">
+        <label for="reprint"></label>
+        <em>转载</em>
+      </span>
+      <div class="link_box" v-show="isLink==='reprint'">
+        <em>转载链接：</em>
+        <input type="text" placeholder="请输入转载链接..." v-model="linkUrl">
+        <label for="linkUrl" v-show="!hasLink">转载链接不能为空</label>
+      </div>
+    </section>
 		<div class="write-view Card">
 			<div class="write-title">
 				<input type="text" class="Input" placeholder="输入标题" v-model="title"/>
@@ -42,7 +59,10 @@ export default {
       markedShow: false,
       showText: "预览",
       upBtn: false,
-      category: null
+      category: null,
+      isLink: 'original',
+      hasLink: true,
+      linkUrl: ''
     };
   },
   mounted: function (s) {
@@ -79,16 +99,29 @@ export default {
       this.upBtn = showMsg;
     },
     publish() {
+      if(this.isLink === 'reprint'){
+        if(this.linkUrl === ''){
+          this.hasLink = false
+          return
+        }
+      }
+      const _isLinked = (this.isLink === 'original')?false:true
+      console.log(_isLinked);
+      
       var _newNote = {
         title: this.title,
         content: this.content,
         time: new Date().getTime(),
-        category: this.category || this.$store.getters.currentCate._id
+        category: this.category || this.$store.getters.currentCate._id,
+        islinked: _isLinked,
+        link: this.linkUrl
       };
       this.$store.dispatch("addNote", _newNote).then(res => {
         if (res.msg == "success") {
           this.title = "";
           this.content = "";
+          this.linkUrl = ""
+          this.hasLink = true
           this.$toast({
             message: '发布成功'
           });

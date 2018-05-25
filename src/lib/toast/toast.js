@@ -9,13 +9,12 @@ Vm.prototype.close = function () {
 }
 
 let Toast = (options = {}, defaultMsg = '获取数据失败') => {
-  console.log(options)
   if (options.noToast !== 1) {
     let toastDiv = document.getElementById('el_toast')
     toastDiv && document.body.removeChild(toastDiv)
     let instance = new Vm().$mount(document.createElement('div'))
     let duration = options.duration || 2000
-    // html
+    // html(comfir)
     if (options.msgType && options.msgType === 1) {
       if (options.message) {
         instance.messageHtml = options.message
@@ -38,12 +37,14 @@ let Toast = (options = {}, defaultMsg = '获取数据失败') => {
     document.body.appendChild(instance.$el)
     instance.isShow = true
     // run after update dom
-    Vue.nextTick(() => {
-      instance.timer = setTimeout(function () {
-        instance.close()
-        instance.callback()
-      }, duration)
-    })
+    if (!options.msgType && options.msgType !== 1 && options.msgType !== 2) {
+      Vue.nextTick(() => {
+        instance.timer = setTimeout(function () {
+          instance.close()
+          instance.callback()
+        }, duration)
+      })
+    }
     return instance
   }
 }

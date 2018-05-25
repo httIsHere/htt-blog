@@ -13,6 +13,10 @@ import global from './components/Global'
 import Toast from './lib/toast/toast'
 import Loading from './lib/loading/loading'
 
+import Filter from './plugins/filters'
+
+import Clipboard from 'clipboard'
+
 Vue.prototype.axios = axios
 Vue.config.productionTip = false
 axios.defaults.baseURL = process.env.API_ROOT
@@ -25,7 +29,12 @@ Vue.prototype.global = global
 Vue.prototype.$toast = Toast
 Vue.prototype.$loading = Loading
 
+Vue.prototype.$copy = Clipboard
+
 Vue.use(VueResource)
+
+Vue.use(Filter)
+
 // Vue.use(VueSocketio, 'http://socketserver.com:1923')
 // Vue.use(VueSocketio, socketio('http://127.0.0.0:3001/'), store)
 

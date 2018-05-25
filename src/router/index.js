@@ -12,6 +12,7 @@ import Email from '@//views/Email'
 import Questions from '@/views/Questions'
 import Chat from '@/views/Chat'
 import CateChoose from '@/views/CateChoose'
+import Interest from '@/views/InterestingView'
 // 控制台页面
 
 Vue.use(Router)
@@ -69,6 +70,10 @@ export default new Router({
       path: '/cateChoose',
       name: 'CateChoose',
       component: CateChoose
+    }, {
+      path: '/interesting',
+      name: 'interesting',
+      component: Interest
     }
   ]
 })

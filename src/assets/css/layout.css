@@ -78,6 +78,7 @@ p {
 }
 hr{border: .8px solid #f0f0f0;}
 pre{overflow: scroll;}
+em{font-style: normal;}
 
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
@@ -452,6 +453,12 @@ img {
 .Feed-meta {
   color: #8590A6;
   line-height: 1;
+}
+.Feed-meta-itemBox{
+  color: #FFF;
+  background: #42c02e;
+  padding: .1rem .2rem;
+  font-size: .58rem;
 }
 
 .Content-item-title {
@@ -1339,7 +1346,22 @@ input.Input {
   padding: 3px 10px;
   border-radius: 13.5px;
 }
-
+.DetailMain-link{
+  width: 90%;
+  margin: 1.3rem auto .5rem;
+  background: rgba(180,205,146, .3);
+  padding: .2rem .2rem .2rem .2rem;
+  word-wrap: break-word;
+}
+/* .DetailMain-link::after{
+  content: "原文链接";
+  background: rgba(180,205,146, .7);
+  color: #FFFFFF;
+  padding: .1rem .2rem;
+  position: relative;
+  top: -1.85rem;
+  left: -3.35rem;
+} */
 .DetailMain-content {
   padding: 15px 50px;
 }
@@ -1639,3 +1661,72 @@ blockquote {
   color: #fff;
   position: relative;
 }
+
+/* draft */
+.draftList{padding: 0; max-width: 550px;margin: 0 auto;}
+.draftItem{padding: .5rem 1.0rem;}
+.draftItem-meta{color: #a9a9a9; font-size: 13px;}
+.draftItem-meta span+span{font-size: 12px;margin-left: .5rem;}
+.draftItem p+p{margin-top: .2rem;}
+
+/* modal */
+.modal_bk{
+  background-color: rgba(0,0,0,.3);
+  position: absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+}
+.modal_content{
+  background-color: rgb(255,255,255);
+  border: 1px solid #f0f0f0;
+  width:60%;
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  /* padding: .5rem; */
+  border-radius: .2rem;
+}
+.modal_content h5{
+  margin: .5rem auto;
+  text-align: center;
+  font-size: .7rem;
+  font-weight: normal;
+}
+.modal_content .toast-btns,.modal_content .toast-btn{
+  border-top: 1px solid #ddd;
+}
+.toast-btns span{  
+  /* padding: 0 .5rem; */
+  display: inline-block;
+  width: 48%;
+  text-align: center;
+  line-height: 1.5rem;
+  margin: 0 auto;
+}
+.toast-btns span:nth-child(2){
+  border-left: 1px solid #ddd;
+  color: #2d84cc;
+}
+.toast-btn span{  
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+  line-height: 1.5rem;
+  margin: 0 auto;
+}
+
+/* radio box */
+.radio_box{ display:inline-block; position:relative; margin: .5rem;}
+.radio_box label{ width:.5rem; height:.5rem; position:absolute; top:0; left:0; border:2px solid #ef4949; border-radius:50%; background:#fff; cursor:pointer;}
+.radio_box input:checked + label:after{ content:''; width:.3rem; height:.3rem; position:absolute; top:50%; left:50%; background:#ef4949; border-radius:50%; transform: translate(-50%,-50%);}
+.radio_box em{margin:0 0 0 .2rem; font-size: .58rem; font-style: normal;}
+.radio_box+.radio_box{margin-left: .5rem;}
+
+/* 2018-05-24 */
+/* write */
+.link_box{margin: 0 0 .5rem .5rem;}
+.link_box input{border: none;padding: .2rem;border-bottom: 1px solid #ddd;}
+.link_box label{color: #ef4949; margin-left: -2.0rem;}
