@@ -17,10 +17,12 @@ export default{
     data() {
         return{
             categories: [],
-            currentIndex: 0
+            currentIndex: 0,
+            isEdit: ''
         }
     },
     created: function () {
+      this.isEdit = this.$route.params.isEdit
       this.$store.dispatch('getCategories').then(res => {
         this.categories = this.$store.getters.categories
         this.$store.dispatch('setCurrentCate', this.categories[0])
@@ -36,9 +38,15 @@ export default{
             }
             bus.$emit('cateToWrite', _currentC);
             const _cate = JSON.stringify(this.categories[_index])
-            this.$router.push({
-              path: `/Write/${this.categories[_index]._id}`
-            });
+            if(this.isEdit){
+              this.$router.push({
+                path: `/Write/edit/${this.isEdit}/${this.categories[_index]._id}`
+              }); 
+            }else {
+              this.$router.push({
+                path: `/Write/${this.categories[_index]._id}`
+              });
+            }
         }
     }
 }

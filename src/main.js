@@ -17,6 +17,8 @@ import Filter from './plugins/filters'
 
 import Clipboard from 'clipboard'
 
+import VueProgressBar from 'vue-progressbar'
+
 Vue.prototype.axios = axios
 Vue.config.productionTip = false
 axios.defaults.baseURL = process.env.API_ROOT
@@ -34,6 +36,22 @@ Vue.prototype.$copy = Clipboard
 Vue.use(VueResource)
 
 Vue.use(Filter)
+
+const options = {
+  color: '#2d84cc',
+  failedColor: '#874b4b',
+  thickness: '5px',
+  transition: {
+    speed: '0.2s',
+    opacity: '0.6s',
+    termination: 300
+  },
+  autoRevert: true,
+  location: 'top',
+  inverse: false
+}
+
+Vue.use(VueProgressBar, options)
 
 // Vue.use(VueSocketio, 'http://socketserver.com:1923')
 // Vue.use(VueSocketio, socketio('http://127.0.0.0:3001/'), store)

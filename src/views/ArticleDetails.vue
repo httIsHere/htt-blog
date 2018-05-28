@@ -33,7 +33,7 @@
           </div>
         </div>     
         <div class="DetailMain-operateBtn">
-          <a href="javascript:;" v-if="user.isAdmin">编辑</a>
+          <a href="javascript:;" v-if="user.isAdmin"><router-link :to="'/write/edit/'+article._id">编辑</router-link></a>
           <a href="javascript:;" @click="deleteArticle" v-if="user.isAdmin&&!article.isDelete">删除</a>
           <a href="javascript:;" @click="pulishArticle" v-if="user.isAdmin&&article.isDelete">恢复</a>
           <a href="javascript:;" @click="shareArticle" :data-clipboard-text="shareLink" class="shareArticle">分享</a>

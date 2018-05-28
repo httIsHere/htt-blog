@@ -95,6 +95,25 @@ export default {
       console.log(err)
     })
   },
+  editNote: ({ commit, state }, _newNote) => {
+    const reqParams = _newNote
+    return axios.post('/server/editArticle', qs.stringify(reqParams)).then(data => {
+      if (data.data.msg === 'success') {
+        doToast(state, commit, {
+          info: '发布成功',
+          btnNum: 2
+        })
+      } else if (data.data.msg === 'error') {
+        doToast(state, commit, {
+          info: '发布失败',
+          btnNum: 1
+        })
+      }
+      return data.data
+    }).catch(err => {
+      console.log(err)
+    })
+  },
   getCategories: ({ commit }) => {
     const start = beginLoading(commit)
     return axios.get('/server/getCategories').then(res => {

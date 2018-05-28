@@ -118,14 +118,21 @@ router.post('/server/getArticle', (req, res) => {
   })
 })
 
-// 添加文章
+// 添加/修改文章
 router.post('/server/addArticle', (req, res) => {
-  const _id = req.body.id
+  const _id = req.body._id
   const article = req.body
-  article.time = new Date().getTime()
   if (_id) {
-    db.Article.findByIdAndUpdate(_id, article, fn)
+    article.editTime = new Date().getTime()
+    logger.info('edit article: ' + _id)
+    db.Article.findByIdAndUpdate(_id, article, fn).then(() => {
+      res.end(JSON.stringify({
+        msg: 'success',
+        code: '200'
+      }))
+    })
   } else {
+    article.time = new Date().getTime()
     new db.Article(article).save().then(() => {
       res.end(JSON.stringify({
         msg: 'success',

@@ -36,8 +36,15 @@ export default new Router({
       name: 'Login',
       component: Login
     },
+    // 写文章
     {
       path: '/write/:id?',
+      name: 'Write',
+      component: Write
+    },
+    // 编辑文章
+    {
+      path: '/write/edit/:id?/:cate?',
       name: 'Write',
       component: Write
     },
@@ -67,7 +74,7 @@ export default new Router({
       component: Chat
     },
     {
-      path: '/cateChoose',
+      path: '/cateChoose/:isEdit?',
       name: 'CateChoose',
       component: CateChoose
     }, {
