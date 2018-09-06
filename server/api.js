@@ -2,8 +2,9 @@
 const db = require('./db')
 const express = require('express')
 const router = express.Router()
-const fn = () => {}
+const fn = () => { }
 const logger = require('./log')
+const request = require('request')
 
 // 获得用户ip
 const getIp = req => {
@@ -152,28 +153,28 @@ router.post('/server/opArticle', (req, res) => {
     db.Article.update({
       '_id': _id
     }, {
-      'isDelete': true,
-      'editTime': _time
-    }).then(() => {
-      res.send(JSON.stringify({
-        msg: 'success',
-        code: '200'
-      }))
-    })
+        'isDelete': true,
+        'editTime': _time
+      }).then(() => {
+        res.send(JSON.stringify({
+          msg: 'success',
+          code: '200'
+        }))
+      })
   } else if (_op === 1 || parseInt(_op) === 1) {
     logger.info('pulish article: ' + _id)
     db.Article.update({
       '_id': _id
     }, {
-      'isDelete': false,
-      'isPublic': true,
-      'editTime': _time
-    }).then(() => {
-      res.send(JSON.stringify({
-        msg: 'success',
-        code: '200'
-      }))
-    })
+        'isDelete': false,
+        'isPublic': true,
+        'editTime': _time
+      }).then(() => {
+        res.send(JSON.stringify({
+          msg: 'success',
+          code: '200'
+        }))
+      })
   }
 })
 
@@ -265,7 +266,57 @@ router.post('/server/subAnswer', (req, res) => {
       code: '200'
     }))
   })
+});
+
+// wx  htt world
+//获取openid
+router.post('/server/wx_getOpenId', (req, res) => {
+  const code = req.body.code
+  const link = 'https://api.weixin.qq.com/sns/jscode2session?appid=wxf289e43ebb59edd9&secret=3f5b83723bcbe1f141068ac86983e452&js_code=' + code + '&grant_type=authorization_code';
+  request(link, (error, response, body) => {
+    if (!error && response.statusCode == 200) {
+      res.send(JSON.stringify(body))
+      logger.info('user login: ' + body.openid)
+    }
+  })
 })
+
+//添加message
+router.post('/server/wx_postMessage', (req, res) => {
+  var _detail = req.body
+  _detail.date = new Date().getTime()
+  db.Wx_message(_detail).save().then(data => {
+    res.send(JSON.stringify({
+      msg: 'success',
+      code: '200'
+    }))
+  })
+})
+
+// main view 获得所有message信息
+router.get('/server/wx_allMessage', (req, res) => {
+  db.Wx_message.find({
+    'isDelete': false
+  }).sort({
+    _id: -1
+  }).then(data => {
+    res.send(JSON.stringify(data))
+  })
+});
+
+//获得message详情
+router.post('/server/wx_msgDetail', (req, res) => {
+  const _id = req.body.id
+  logger.info('show wx msg detail: ' + _id)
+  db.Wx_message.findOne({
+    '_id': _id
+  }).then(data => {
+    if (data) {
+      res.send(JSON.stringify(data))
+    }
+  })
+});
+
 
 module.exports = router
 

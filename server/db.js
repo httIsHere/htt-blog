@@ -7,11 +7,15 @@ const article = require('./schemas/article')
 const categories = require('./schemas/categories')
 const question = require('./schemas/questions')
 
+// wx小程序
+const wx_message = require('./schemas/WX_httWorld/message')
+
 const Models = {
   User: mongoose.model('User', user),
   Article: mongoose.model('Article', article),
   Categories: mongoose.model('Categories', categories),
   Question: mongoose.model('Question', question),
+  Wx_message: mongoose.model('Wx_message', wx_message),
   initialized: false
 }
 
