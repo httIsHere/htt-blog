@@ -9,6 +9,7 @@ const question = require('./schemas/questions')
 
 // wx小程序
 const wx_message = require('./schemas/WX_httWorld/message')
+const wx_circle = require('./schemas/WX_httWorld/circle')
 
 const Models = {
   User: mongoose.model('User', user),
@@ -16,6 +17,7 @@ const Models = {
   Categories: mongoose.model('Categories', categories),
   Question: mongoose.model('Question', question),
   Wx_message: mongoose.model('Wx_message', wx_message),
+  Wx_circle: mongoose.model('Wx_circle', wx_circle),
   initialized: false
 }
 

@@ -2,7 +2,7 @@
 const db = require('./db')
 const express = require('express')
 const router = express.Router()
-const fn = () => { }
+const fn = () => {}
 const logger = require('./log')
 const request = require('request')
 
@@ -94,11 +94,12 @@ router.post('/server/getDraft', (req, res) => {
   logger.info('show draft')
   db.Article.find({
     $or: [{
-      'isDelete': true
-    },
-    {
-      'isPublic': false
-    }]
+        'isDelete': true
+      },
+      {
+        'isPublic': false
+      }
+    ]
   }).sort({
     _id: -1
   }).then(data => {
@@ -153,28 +154,28 @@ router.post('/server/opArticle', (req, res) => {
     db.Article.update({
       '_id': _id
     }, {
-        'isDelete': true,
-        'editTime': _time
-      }).then(() => {
-        res.send(JSON.stringify({
-          msg: 'success',
-          code: '200'
-        }))
-      })
+      'isDelete': true,
+      'editTime': _time
+    }).then(() => {
+      res.send(JSON.stringify({
+        msg: 'success',
+        code: '200'
+      }))
+    })
   } else if (_op === 1 || parseInt(_op) === 1) {
     logger.info('pulish article: ' + _id)
     db.Article.update({
       '_id': _id
     }, {
-        'isDelete': false,
-        'isPublic': true,
-        'editTime': _time
-      }).then(() => {
-        res.send(JSON.stringify({
-          msg: 'success',
-          code: '200'
-        }))
-      })
+      'isDelete': false,
+      'isPublic': true,
+      'editTime': _time
+    }).then(() => {
+      res.send(JSON.stringify({
+        msg: 'success',
+        code: '200'
+      }))
+    })
   }
 })
 
@@ -293,12 +294,18 @@ router.post('/server/wx_postMessage', (req, res) => {
   })
 })
 
-// main view 获得所有message信息
+// main view 获得所有message信息(包括获得个人所有动态)[有需要时实现分页]
 router.get('/server/wx_allMessage', (req, res) => {
-  db.Wx_message.find({
+  let _param = {
     'isDelete': false
-  }).sort({
-    _id: -1
+  }
+  if (req.query._id) {
+    _param.posterOpenId = req.query._id
+  }
+  logger.info('select wx msg: ' + JSON.stringify(_param))
+  db.Wx_message.find(_param).sort({
+    _id: -1,
+    date: -1
   }).then(data => {
     res.send(JSON.stringify(data))
   })
@@ -317,6 +324,48 @@ router.post('/server/wx_msgDetail', (req, res) => {
   })
 });
 
+//获得用户相册[有需要时实现分页]??好想不需要了
+router.get('/server/wx_userAlbum', (req, res) => {
+  const posterOpenId = req.query._id;
+
+})
+
+router.post('/server/wx_like', (req, res) => {
+
+})
+
+//获得所有圈子
+router.get('/server/wx_allCircle', (req, res) => {
+  db.Wx_circle.find().then(data => {
+    res.send(JSON.stringify(data))
+  })
+})
+
+//创建圈子
+router.post('/server/wx_createCircle', (req, res) => {
+
+  const newCircle = req.body
+  db.Wx_circle.findOne({
+    name: newCircle.name
+  }).then(data => {
+    if (data) {
+      res.send(JSON.stringify({
+        msg: '该圈子已存在',
+        code: 402
+      }))
+    } else {
+      //create circle
+      db.Wx_circle(newCircle).save().then(_data => {
+        res.send(JSON.stringify({
+          msg: 'success',
+          code: '200'
+        }))
+      })
+    }
+  })
+})
+
+//加入圈子
+
 
 module.exports = router
-
